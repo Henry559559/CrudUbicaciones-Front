@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 export interface Pais {
   id: number;
@@ -10,30 +11,32 @@ export interface Pais {
 @Injectable({
   providedIn: 'root'
 })
+
 export class PaisService {
-  private apiUrl = 'http://localhost:5000/api/pais';
+  private apiUrl = `${environment.apiUrl}/pais`
+  private _http = inject(HttpClient)
 
-
-
-  constructor(private http: HttpClient) {}
-
-  getPaises(): Observable<Pais[]> {
-    return this.http.get<Pais[]>(this.apiUrl);
+  obtenerPaisesV2(): Observable<any> {
+    return this._http.get<any>('https://restcountries.com/v3.1/all');
   }
 
-  getPais(id: number): Observable<Pais> {
-    return this.http.get<Pais>(`${this.apiUrl}/${id}`);
+  obtenerPaises(): Observable<Pais[]> {
+    return this._http.get<Pais[]>(this.apiUrl);
+  }
+
+  obtenerPais(id: number): Observable<Pais> {
+    return this._http.get<Pais>(`${this.apiUrl}/${id}`);
   }
 
   crearPais(pais: Partial<Pais>): Observable<Pais> {
-    return this.http.post<Pais>(this.apiUrl, pais);
+    return this._http.post<Pais>(this.apiUrl, pais);
   }
 
   actualizarPais(id: number, pais: Pais): Observable<Pais> {
-    return this.http.put<Pais>(`${this.apiUrl}/${id}`, pais);
+    return this._http.put<Pais>(`${this.apiUrl}/${id}`, pais);
   }
 
   eliminarPais(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this._http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

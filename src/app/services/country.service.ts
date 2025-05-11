@@ -22,6 +22,10 @@ export class CountryService {
     return this._http.post<IResponseInterface<ICountryInterface>>(this.apiUrl, data);
   }
 
+  update(data: ICountryInterface): Observable<IResponseInterface<ICountryInterface>> {
+    return this._http.put<IResponseInterface<ICountryInterface>>(this.apiUrl, data);
+  }
+
   delete(id: number): Observable<IResponseInterface<ICountryInterface>> {
     return this._http.delete<IResponseInterface<ICountryInterface>>(`${this.apiUrl}/${id}`);
   }  

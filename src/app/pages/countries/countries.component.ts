@@ -47,8 +47,22 @@ export class CountriesComponent implements OnInit {
       error: (err) => console.error('Error al crear país', err)
     });
   } 
+
+  updateCountries(pais: ITableInterface) {
+    const dto = {
+      idCountry: pais.id ?? 0,
+      nameCountry: pais.name,
+      dateModified: pais.dateModified,
+      active: pais.active
+    };
   
-  eliminarPais(id: number) {
+    this._countrySvc.update(dto).subscribe({
+      next: () => this.readAll(),
+      error: (err) => console.error('Error al actualizar país', err)
+    });
+  }
+  
+  deleteCountries(id: number) {
     console.log('id a eliminar: ', id);
     
     if (confirm('¿Estás seguro de eliminar este país?')) {

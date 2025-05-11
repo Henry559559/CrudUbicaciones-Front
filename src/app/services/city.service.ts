@@ -18,6 +18,18 @@ export class CityService {
     return this._http.get<IResponseInterface<ICityInterface[]>>(this.apiUrl);
   }
 
+  create(data: ICityInterface): Observable<IResponseInterface<ICityInterface>> {
+    return this._http.post<IResponseInterface<ICityInterface>>(this.apiUrl, data);
+  }
+
+  update(data: ICityInterface): Observable<IResponseInterface<ICityInterface>> {
+    return this._http.put<IResponseInterface<ICityInterface>>(this.apiUrl, data);
+  }
+
+  delete(id: number): Observable<IResponseInterface<ICityInterface>> {
+    return this._http.delete<IResponseInterface<ICityInterface>>(`${this.apiUrl}/${id}`);
+  }  
+    
    readPagedFake(page: number, limit: number) {
       return this.readAll().pipe(
         map(res => {

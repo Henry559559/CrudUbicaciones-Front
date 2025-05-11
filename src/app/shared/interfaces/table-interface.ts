@@ -3,4 +3,5 @@ export interface ITableInterface {
     dateModified: Date;
     id?: number;
     name: string;
+    isUpdate?: boolean;
 }

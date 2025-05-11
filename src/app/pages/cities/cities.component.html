@@ -4,5 +4,8 @@
   [currentPage]="currentPage"
   [itemsPerPage]="itemsPerPage"
   [totalItems]="totalItems"
-  (pageChange)="changePage($event)">
+  (pageChange)="changePage($event)"
+  (create)="createCities($event)"
+  (update)="updateCities($event)"
+  (delete)="deleteCities($event)">
 </app-table>

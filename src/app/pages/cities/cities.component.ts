@@ -23,9 +23,7 @@ export class CitiesComponent {
   }
   readAll(): void {
     this._citySvc.readPagedFake(this.currentPage, this.itemsPerPage).subscribe((res) => {
-      this.totalItems = res.data.total;
-      console.log("Cuantos intems: ",this.totalItems, res.data.total);
-      
+      this.totalItems = res.data.total;      
       this.city = res.data.result.map((item) => ({
         active: item.active,
         dateModified: item.dateModified,
@@ -33,6 +31,43 @@ export class CitiesComponent {
         name: item.nameCity,
       }));
     });
+  }
+
+  createCities(city: ITableInterface) {
+    const dto = {
+      idCity: city.id ?? 0,
+      nameCity: city.name,
+      dateModified: city.dateModified,
+      active: city.active
+    };
+
+    this._citySvc.create(dto).subscribe({
+      next: () => this.readAll(),
+      error: (err) => console.error('Error al crear país', err)
+    });
+  } 
+
+  updateCities(city: ITableInterface) {
+    const dto = {
+      idCity: city.id ?? 0,
+      nameCity: city.name,
+      dateModified: city.dateModified,
+      active: city.active
+    };
+  
+    this._citySvc.update(dto).subscribe({
+      next: () => this.readAll(),
+      error: (err) => console.error('Error al actualizar país', err)
+    });
+  }
+  
+  deleteCities(id: number) {    
+    if (confirm('¿Estás seguro de eliminar este país?')) {
+      this._citySvc.delete(id).subscribe({
+        next: () => this.readAll(),
+        error: err => console.error('Error al eliminar país', err)
+      });
+    }
   }
 
   changePage(page: number): void {

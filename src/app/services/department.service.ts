@@ -17,6 +17,18 @@ export class DepartmentService {
   readAll(): Observable<IResponseInterface<IDepartmentInterface[]>> {
     return this._http.get<IResponseInterface<IDepartmentInterface[]>>(this.apiUrl);
   }
+
+  create(data: IDepartmentInterface): Observable<IResponseInterface<IDepartmentInterface>> {
+    return this._http.post<IResponseInterface<IDepartmentInterface>>(this.apiUrl, data);
+  }
+
+  update(data: IDepartmentInterface): Observable<IResponseInterface<IDepartmentInterface>> {
+    return this._http.put<IResponseInterface<IDepartmentInterface>>(this.apiUrl, data);
+  }
+
+  delete(id: number): Observable<IResponseInterface<IDepartmentInterface>> {
+    return this._http.delete<IResponseInterface<IDepartmentInterface>>(`${this.apiUrl}/${id}`);
+  }  
   
   readPagedFake(page: number, limit: number) {
     return this.readAll().pipe(

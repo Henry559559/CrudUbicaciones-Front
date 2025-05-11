@@ -25,9 +25,7 @@ export class DepartmentsComponent implements OnInit {
 
   readAll(): void {
     this._departmentSvc.readPagedFake(this.currentPage, this.itemsPerPage).subscribe((res) => {
-      this.totalItems = res.data.total;
-      console.log("Cuantos intems: ",this.totalItems, res.data.total);
-      
+      this.totalItems = res.data.total;      
       this.departament = res.data.result.map((item) => ({
         active: item.active,
         dateModified: item.dateModified,
@@ -35,6 +33,45 @@ export class DepartmentsComponent implements OnInit {
         name: item.nameDepartment,
       }));
     });
+  }
+
+ createDepartments(departament: ITableInterface) {
+    const dto = {
+      idDepartment: departament.id ?? 0,
+      nameDepartment: departament.name,
+      dateModified: departament.dateModified,
+      active: departament.active
+    };
+  
+    this._departmentSvc.create(dto).subscribe({
+      next: () => this.readAll(),
+      error: (err) => console.error('Error al crear país', err)
+    });
+  } 
+
+  updateDepartments(departament: ITableInterface) {
+    const dto = {
+      idDepartment: departament.id ?? 0,
+      nameDepartment: departament.name,
+      dateModified: departament.dateModified,
+      active: departament.active
+    };
+  
+    this._departmentSvc.update(dto).subscribe({
+      next: () => this.readAll(),
+      error: (err) => console.error('Error al actualizar país', err)
+    });
+  }
+  
+  deleteDepartments(id: number) {
+    console.log('id a eliminar: ', id);
+    
+    if (confirm('¿Estás seguro de eliminar este país?')) {
+      this._departmentSvc.delete(id).subscribe({
+        next: () => this.readAll(),
+        error: err => console.error('Error al eliminar país', err)
+      });
+    }
   }
 
   changePage(page: number): void {

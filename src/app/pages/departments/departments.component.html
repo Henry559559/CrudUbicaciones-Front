@@ -4,5 +4,8 @@
   [currentPage]="currentPage"
   [itemsPerPage]="itemsPerPage"
   [totalItems]="totalItems"
-  (pageChange)="changePage($event)">
+  (pageChange)="changePage($event)"
+  (create)="createDepartments($event)"
+  (update)="updateDepartments($event)"
+  (delete)="deleteDepartments($event)">
 </app-table>

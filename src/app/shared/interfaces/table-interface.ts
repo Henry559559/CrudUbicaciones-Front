@@ -1,6 +1,6 @@
 export interface ITableInterface {
     active: boolean;
     dateModified: Date;
-    id: number;
+    id?: number;
     name: string;
 }

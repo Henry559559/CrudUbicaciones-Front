@@ -1,1 +1,8 @@
-<p>departments works!</p>
+<app-table
+  [data]="departament"
+  [title]="'Departamentos'"
+  [currentPage]="currentPage"
+  [itemsPerPage]="itemsPerPage"
+  [totalItems]="totalItems"
+  (pageChange)="changePage($event)">
+</app-table>
